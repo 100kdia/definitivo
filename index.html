@@ -24,15 +24,25 @@
     </noscript>
     
     <script>
-      (function() {
-        function isHeadless() {
-          const hasWebdriver = navigator.webdriver;
-          const hasPlugins = navigator.plugins.length === 0;
-          const hasLanguages = !navigator.language || navigator.languages.length === 0;
-          const hasChrome = navigator.userAgent.includes('Chrome') && !window.chrome;
-      
-          return hasWebdriver || hasPlugins || hasLanguages || hasChrome;
-        }
+      function isHeadless() {
+  const isBot = navigator.webdriver;
+
+  const userAgent = navigator.userAgent || '';
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+
+  // Só faz verificações profundas se **não** for mobile
+  if (!isMobile) {
+    const hasPlugins = navigator.plugins.length === 0;
+    const hasNoLanguages = !navigator.language || (navigator.languages && navigator.languages.length === 0);
+    const isChromeButNoChromeObj = userAgent.includes('Chrome') && !window.chrome;
+
+    return isBot || hasPlugins || hasNoLanguages || isChromeButNoChromeObj;
+  }
+
+  // Se for mobile, só bloqueia se for um bot claro
+  return isBot;
+}
+
       
         if (isHeadless()) {
           // Redireciona ou trava a navegação

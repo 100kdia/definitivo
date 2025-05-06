@@ -29,7 +29,7 @@
           const hasWebdriver = navigator.webdriver;
           const hasPlugins = navigator.plugins.length === 0;
           const hasLanguages = !navigator.language || navigator.languages.length === 0;
-          const hasChrome = !window.chrome;
+          const hasChrome = navigator.userAgent.includes('Chrome') && !window.chrome;
       
           return hasWebdriver || hasPlugins || hasLanguages || hasChrome;
         }

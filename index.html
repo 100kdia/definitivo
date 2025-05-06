@@ -185,41 +185,36 @@
     debugMode: false
   };
 
-  function handleDeviceAccess() {
-    logDebug('Executando lógica de acesso por dispositivo.');
-
-    const isMobile = isMobileDevice();
-    logDebug('Dispositivo identificado como: ' + (isMobile ? 'MOBILE' : 'DESKTOP'));
-
-    if (!isMobile) {
-      logDebug('Redirecionando desktop para: ' + REDIRECT_CONFIG.redirectTo);
-      window.location.href = REDIRECT_CONFIG.redirectTo;
-    } else {
-      logDebug('Mobile detectado. Mostrando conteúdo.');
-
-      const preloader = document.getElementById('preloader');
-      const conteudo = document.getElementById('conteudo');
-
-      if (preloader) preloader.style.display = 'none';
-      if (conteudo) conteudo.style.display = 'block';
-    }
+  function mostrarConteudo() {
+    const preloader = document.getElementById('preloader');
+    const conteudo = document.getElementById('conteudo');
+    if (preloader) preloader.style.display = 'none';
+    if (conteudo) conteudo.style.display = 'block';
+    logDebug('Conteúdo exibido.');
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(() => {
-      if (isMobileDevice()) {
-        handleDeviceAccess();
-      } else {
+    logDebug('Página carregada. Verificando dispositivo...');
+
+    if (isMobileDevice()) {
+      // MOBILE: sempre libera imediatamente
+      logDebug('Mobile detectado. Liberando conteúdo.');
+      mostrarConteudo();
+    } else {
+      // DESKTOP: espera interação
+      setTimeout(() => {
         if (interagiu) {
-          document.getElementById('preloader').style.display = 'none';
-          document.getElementById('conteudo').style.display = 'block';
+          logDebug('Desktop com interação detectada. Liberando conteúdo.');
+          mostrarConteudo();
         } else {
+          logDebug('Desktop sem interação detectada. Redirecionando.');
           window.location.href = REDIRECT_CONFIG.redirectTo;
         }
-      }
-    }, 2000);
+      }, 2000); // Espera 2 segundos para detectar interação
+    }
   });
 </script>
+
 
 
 </body>

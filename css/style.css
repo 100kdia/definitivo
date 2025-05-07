@@ -11,7 +11,8 @@
 :root {
     --red-: #C4160D;
     --white-: #fff;
-    --titulo-: #1F2123 --paragrafo-: #4F5257;
+    --titulo-: #1F2123 
+    --paragrafo-: #4F5257;
     --globo--com: #0568DD;
     --ge: #04A948;
     --gshow: #FF6701;
@@ -33,6 +34,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 #ge {
@@ -61,23 +70,16 @@ body {
 }
 
 .barTop {
-    height: 48px;
     display: flex;
     width: 100%;
-
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    font-size: 14px !important;
-    font-family: 'Poppins';
-    font-weight: 500;
-    padding: 10px 15px;
-    overflow: auto;
+    flex-wrap: wrap;
+    overflow-x: auto;
     overflow-y: hidden;
 }
 
 .barTop span {
-    min-width: fit-content !important;
+    min-width: fit-content;
+    margin-right: 10px;
 }
 
 .barTop::-webkit-scrollbar {
@@ -154,6 +156,7 @@ header h1 {
     padding: 20px;
     width: 100%;
     max-width: 700px;
+    margin: 0 auto;
 
 }
 
@@ -273,4 +276,23 @@ footer p {
 footer span {
     font-size: 9px !important;
     font-weight: 300;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 20px;
+    }
+
+    #title {
+        font-size: 22px;
+    }
+
+    .corpo {
+        padding: 10px;
+    }
+
+    a {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
